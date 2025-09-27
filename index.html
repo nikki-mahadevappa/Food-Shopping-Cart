@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Shopping Cart</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <div class="container">
+    <header>
+      <h1>Your Shopping Cart</h1>
+      <div class="shopping">
+        <img src="image/shopping.svg" alt="Shopping Cart Icon">
+        <span class="quantity">0</span>
+      </div>
+    </header>
+
+    <div class="list">
+    </div>
+  </div>
+
+  <div class="cart">
+    <h1>Your Cart</h1>
+    <ul class="listCard">
+    </ul>
+
+    <div class="checkOut">
+      <div class="total">0</div>
+      <div class="closeShopping">Close</div>
+    </div>
+
+    <div class="coupon-section">
+      <label for="coupon">Have a coupon?</label>
+      <input type="text" id="coupon" placeholder="Enter coupon code">
+      <button onclick="applyCoupon()">Apply</button>
+      <p id="coupon-message"></p>
+    </div>
+
+    <div class="cart-summary">
+      <p>Subtotal: ₹<span id="subtotal">0</span></p>
+      <p>Discount: -₹<span id="discount">0</span></p>
+      <p>Delivery: ₹<span id="delivery">50</span></p>
+      <p>Coupon: -₹<span id="coupon-discount">0</span></p>
+      <p>GST (18%): ₹<span id="gst">0</span></p>
+      <h3>Final Total: ₹<span id="final-total">0</span></h3>
+    </div>
+
+    <div class="payment-method">
+      <label for="payment">Select Payment:</label>
+      <select id="payment">
+        <option value="UPI">UPI</option>
+        <option value="Card">Card</option>
+        <option value="Cash on Delivery">Cash on Delivery</option>
+      </select>
+      <button onclick="checkout()">Checkout</button>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
