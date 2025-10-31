@@ -17,9 +17,8 @@ let products = [];
 let listCards = [];
 let appliedCoupon = 0;
 
-// Initialize app and fetch products from backend
 function initApp(){
-    fetch('http://localhost:3000/products')
+    fetch('http://127.0.0.1:5000/api/products')
         .then(res => res.json())
         .then(data => {
             products = data;
@@ -38,9 +37,8 @@ function initApp(){
 }
 initApp();
 
-// Add to cart (calls backend)
 function addToCard(productId){
-    fetch('http://localhost:3000/cart/add', {
+    fetch('http://127.0.0.1:5000/cart/add', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ productId, quantity: 1 })
@@ -57,10 +55,9 @@ function addToCard(productId){
     });
 }
 
-// Remove from cart (calls backend)
 function changeQuantity(productId, quantityValue){
     if(quantityValue === 0){
-        fetch('http://localhost:3000/cart/remove', {
+        fetch('http://127.0.0.1:5000/cart/remove', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ productId })
@@ -75,8 +72,7 @@ function changeQuantity(productId, quantityValue){
             reloadCard();
         });
     } else {
-        // Update quantity locally
-        fetch('http://localhost:3000/cart/add', {
+        fetch('http://127.0.0.1:5000/cart/add', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ productId, quantity: quantityValue })
@@ -93,7 +89,6 @@ function changeQuantity(productId, quantityValue){
     }
 }
 
-// Reload cart UI
 function reloadCard(){
     listCard.innerHTML = '';
     let count = 0;
@@ -124,7 +119,6 @@ function reloadCard(){
     updateCartSummary();
 }
 
-// Coupon
 function applyCoupon() {
     let code = document.getElementById("coupon").value.trim();
     if (code === "NEW50") {
@@ -137,7 +131,6 @@ function applyCoupon() {
     reloadCard();
 }
 
-// Cart summary
 function updateCartSummary() {
     let subtotal = 0;
     listCards.forEach((value) => { if(value!=null) subtotal += value.price; });
@@ -157,18 +150,20 @@ function updateCartSummary() {
     document.getElementById("final-total").innerText = finalTotal.toLocaleString();
 }
 
-// Checkout (calls backend)
 function checkout() {
     if(listCards.length === 0) { alert("Cart is empty!"); return; }
 
     let payment = document.getElementById("payment").value;
-
-    fetch('http://localhost:3000/checkout', {
+  if (payment === "UPI") {
+        window.open("", "UPI Payment", "width=400,height=200")
+            .document.write("<h3>Please pay to UPI ID:<br><b>niharika@paytm</b></h3>");
+    }
+    fetch('http://127.0.0.1:5000/checkout', {
         method: 'POST'
     })
     .then(res => res.json())
     .then(data => {
-        alert(data.message + " | Payment: " + payment);
+        alert(data.message + " | Payment: " + payment + "successful");
         listCards = [];
         appliedCoupon = 0;
         document.getElementById("coupon-message").innerText = "";
